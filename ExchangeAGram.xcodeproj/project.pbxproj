@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		635974941A036EDB00C64B5E /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635974931A036EDB00C64B5E /* FeedItem.swift */; };
 		636ADB1F1A02DD8700C9CA36 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636ADB1E1A02DD8700C9CA36 /* AppDelegate.swift */; };
 		636ADB221A02DD8700C9CA36 /* ExchangeAGram.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 636ADB201A02DD8700C9CA36 /* ExchangeAGram.xcdatamodeld */; };
 		636ADB271A02DD8700C9CA36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 636ADB251A02DD8700C9CA36 /* Main.storyboard */; };
@@ -16,7 +17,6 @@
 		636ADB421A02DE1D00C9CA36 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636ADB411A02DE1D00C9CA36 /* FeedViewController.swift */; };
 		63B256D31A02E265001BC1CD /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B256D21A02E265001BC1CD /* FeedCell.swift */; };
 		63B256D51A02E46A001BC1CD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B256D41A02E46A001BC1CD /* MobileCoreServices.framework */; };
-		63B256D71A02EB74001BC1CD /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B256D61A02EB74001BC1CD /* FeedItem.swift */; };
 		63B256DB1A02F48A001BC1CD /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B256DA1A02F48A001BC1CD /* FilterViewController.swift */; };
 		63B256DD1A02F878001BC1CD /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B256DC1A02F878001BC1CD /* FilterCell.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		635974931A036EDB00C64B5E /* FeedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		636ADB191A02DD8700C9CA36 /* ExchangeAGram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExchangeAGram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		636ADB1D1A02DD8700C9CA36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		636ADB1E1A02DD8700C9CA36 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,7 +46,6 @@
 		636ADB411A02DE1D00C9CA36 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		63B256D21A02E265001BC1CD /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		63B256D41A02E46A001BC1CD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		63B256D61A02EB74001BC1CD /* FeedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		63B256DA1A02F48A001BC1CD /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		63B256DC1A02F878001BC1CD /* FilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,6 +69,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		635974951A036F2300C64B5E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				636ADB201A02DD8700C9CA36 /* ExchangeAGram.xcdatamodeld */,
+				635974931A036EDB00C64B5E /* FeedItem.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		636ADB101A02DD8700C9CA36 = {
 			isa = PBXGroup;
 			children = (
@@ -98,8 +107,7 @@
 				636ADB251A02DD8700C9CA36 /* Main.storyboard */,
 				636ADB281A02DD8700C9CA36 /* Images.xcassets */,
 				636ADB2A1A02DD8700C9CA36 /* LaunchScreen.xib */,
-				636ADB201A02DD8700C9CA36 /* ExchangeAGram.xcdatamodeld */,
-				63B256D61A02EB74001BC1CD /* FeedItem.swift */,
+				635974951A036F2300C64B5E /* Model */,
 				636ADB1C1A02DD8700C9CA36 /* Supporting Files */,
 			);
 			path = ExchangeAGram;
@@ -236,7 +244,7 @@
 				636ADB1F1A02DD8700C9CA36 /* AppDelegate.swift in Sources */,
 				63B256D31A02E265001BC1CD /* FeedCell.swift in Sources */,
 				636ADB421A02DE1D00C9CA36 /* FeedViewController.swift in Sources */,
-				63B256D71A02EB74001BC1CD /* FeedItem.swift in Sources */,
+				635974941A036EDB00C64B5E /* FeedItem.swift in Sources */,
 				636ADB221A02DD8700C9CA36 /* ExchangeAGram.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

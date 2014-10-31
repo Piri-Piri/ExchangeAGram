@@ -20,6 +20,10 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
         let request = NSFetchRequest(entityName: "FeedItem")
         let appDelegate: AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
@@ -81,6 +85,7 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         let image = info[UIImagePickerControllerOriginalImage] as UIImage
         let imageData = UIImageJPEGRepresentation(image, 1.0)
+        let thumbNailData = UIImageJPEGRepresentation(image, 0.1)
         
         let managedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext
         let entityDescription = NSEntityDescription.entityForName("FeedItem", inManagedObjectContext: managedObjectContext!)
@@ -88,6 +93,7 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         feedItem.image = imageData
         feedItem.caption = "test caption"
+        feedItem.thumbNail = thumbNailData
         
         (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
         

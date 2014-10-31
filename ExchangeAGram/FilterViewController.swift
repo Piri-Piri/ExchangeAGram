@@ -20,6 +20,10 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     var filters: [CIFilter] = []
     
+    let placeHolderImage = UIImage(named: "Placeholder")
+    
+    let tmp = NSTemporaryDirectory()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,6 +42,8 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         filters = photoFilters()
     }
+    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -54,11 +60,38 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: FilterCell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as FilterCell
         
-        //cell.imageView.image = UIImage(named: "Placeholder")
-        cell.imageView.image = filterImageFromImage(feedItem.image, filter: filters[indexPath.row])
+        cell.imageView.image = placeHolderImage
         
+        let filterQueue: dispatch_queue_t = dispatch_queue_create("filter queue", nil)
+        
+        dispatch_async(filterQueue, { () -> Void in
+            
+            let filterImage = self.getCachedImage(indexPath.row)
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                cell.imageView.image = filterImage
+            })
+        })
+
         return cell
     }
+    
+    // MARK: - UICollectionViewDelegate
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let filterImage = self.filterImageFromImage(feedItem.image, filter: filters[indexPath.row])
+        
+        let imageData = UIImageJPEGRepresentation(filterImage, 1.0)
+        feedItem.image = imageData
+        
+        let thumbNailData = UIImageJPEGRepresentation(filterImage, 0.1)
+        feedItem.thumbNail = thumbNailData
+        
+        (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
+        
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     
     // MARK: - Helper Functions
     
@@ -101,15 +134,44 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
         filter.setValue(unfilteredImage, forKey: kCIInputImageKey)
         let filteredImage:CIImage = filter.outputImage
         
+        // optimize image to have avoid ui blocking (perfomance)
         let extent = filteredImage.extent()
         let cgImage: CGImageRef = context.createCGImage(filteredImage, fromRect: extent)
         
-        let finalImage = UIImage(CGImage: cgImage)
+        let finalImage = UIImage(CGImage: cgImage, scale: 1.0, orientation: UIImageOrientation.Up)
         
         return finalImage!
     }
     
+    // MARK: - Caching Functions
     
+    func cacheImage(imageNumber: Int) {
+        let fileName = "\(imageNumber)-\(feedItem.hashValue)"
+        let uniquePath = tmp.stringByAppendingPathComponent(fileName)
+        
+        if !NSFileManager.defaultManager().fileExistsAtPath(fileName) {
+            let data = self.feedItem.thumbNail
+            let filter = self.filters[imageNumber]
+            let image = filterImageFromImage(data, filter: filter)
+            UIImageJPEGRepresentation(image, 1.0).writeToFile(uniquePath, atomically: true)
+        }
+    }
+    
+    func getCachedImage(imageNumber: Int) -> UIImage {
+        let fileName = "\(imageNumber)-\(feedItem.hashValue)"
+        let uniquePath = tmp.stringByAppendingPathComponent(fileName)
+        
+        var image: UIImage
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(uniquePath) {
+            image = UIImage(contentsOfFile: uniquePath)!
+        }
+        else {
+            self.cacheImage(imageNumber)
+            image = UIImage(contentsOfFile: uniquePath)!
+        }
+        return image
+    }
     
     
     
