@@ -79,17 +79,8 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     // MARK: - UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let filterImage = self.filterImageFromImage(feedItem.image, filter: filters[indexPath.row])
         
-        let imageData = UIImageJPEGRepresentation(filterImage, 1.0)
-        feedItem.image = imageData
-        
-        let thumbNailData = UIImageJPEGRepresentation(filterImage, 0.1)
-        feedItem.thumbNail = thumbNailData
-        
-        (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
-        
-        self.navigationController?.popViewControllerAnimated(true)
+        createAlertController(indexPath)
     }
     
     
@@ -141,6 +132,76 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
         let finalImage = UIImage(CGImage: cgImage, scale: 1.0, orientation: UIImageOrientation.Up)
         
         return finalImage!
+    }
+    
+    // MARK: - AlerController Functions
+    
+    func createAlertController(indexPath: NSIndexPath) {
+        let alert = UIAlertController(title: "Photo Options", message: "Please choose an option", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addTextFieldWithConfigurationHandler { (textfield) -> Void in
+            textfield.placeholder = "Add Caption here"
+        }
+        
+        var text: String
+        
+        let textField = alert.textFields![0] as UITextField
+        
+        let photoAction = UIAlertAction(title: "Post Photo tp Facebook with Caption", style: UIAlertActionStyle.Destructive) { (UIAlertAction) -> Void in
+            self.shareToFacebook(indexPath)
+            
+            text = textField.text
+            
+            self.saveFilterToCoreData(indexPath, caption: text)
+        }
+        alert.addAction(photoAction)
+        
+        let saveFilterAction = UIAlertAction(title: "Save Filter without posting on Facebook", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
+            
+            text = textField.text
+            
+            self.saveFilterToCoreData(indexPath, caption: text)
+        }
+        alert.addAction(saveFilterAction)
+        
+        let cancelAction = UIAlertAction(title: "Select another Filter", style: UIAlertActionStyle.Cancel) { (UIAlertAction) -> Void in
+
+        }
+        alert.addAction(cancelAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func saveFilterToCoreData(indexPath: NSIndexPath, caption: String) {
+        let filterImage = self.filterImageFromImage(feedItem.image, filter: filters[indexPath.row])
+        
+        let imageData = UIImageJPEGRepresentation(filterImage, 1.0)
+        feedItem.image = imageData
+        
+        let thumbNailData = UIImageJPEGRepresentation(filterImage, 0.1)
+        feedItem.thumbNail = thumbNailData
+        
+        feedItem.caption = caption
+        
+        (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
+        
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func shareToFacebook(indexPath: NSIndexPath) {
+        let filterImage = self.filterImageFromImage(feedItem.image, filter: filters[indexPath.row])
+        
+        let photos: NSArray = [filterImage]
+        var params = FBPhotoParams()
+        params.photos = photos
+        
+        FBDialogs.presentShareDialogWithPhotoParams(params, clientState: nil) { (call, result, error) -> Void in
+            if result? != nil {
+                println(result)
+            }
+            else {
+                println(error)
+            }
+        }
     }
     
     // MARK: - Caching Functions
