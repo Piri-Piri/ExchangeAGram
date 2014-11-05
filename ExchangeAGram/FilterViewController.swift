@@ -142,24 +142,16 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
             textfield.placeholder = "Add Caption here"
         }
         
-        var text: String
-        
         let textField = alert.textFields![0] as UITextField
         
         let photoAction = UIAlertAction(title: "Post Photo tp Facebook with Caption", style: UIAlertActionStyle.Destructive) { (UIAlertAction) -> Void in
             self.shareToFacebook(indexPath)
-            
-            text = textField.text
-            
-            self.saveFilterToCoreData(indexPath, caption: text)
+            self.saveFilterToCoreData(indexPath, caption: textField.text)
         }
         alert.addAction(photoAction)
         
         let saveFilterAction = UIAlertAction(title: "Save Filter without posting on Facebook", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
-            
-            text = textField.text
-            
-            self.saveFilterToCoreData(indexPath, caption: text)
+            self.saveFilterToCoreData(indexPath, caption: textField.text)
         }
         alert.addAction(saveFilterAction)
         
