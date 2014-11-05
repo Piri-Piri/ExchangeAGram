@@ -107,7 +107,7 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         let feedItem = FeedItem(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext!)
         
         feedItem.image = imageData
-        feedItem.caption = "test caption"
+        feedItem.caption = ""
         feedItem.thumbNail = thumbNailData
         
         feedItem.latitude = locationManager.location.coordinate.latitude
@@ -158,7 +158,7 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        println("locations = \(locations)")
+        //println("locations = \(locations)")
     }
 
 }
