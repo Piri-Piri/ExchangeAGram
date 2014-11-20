@@ -174,6 +174,8 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         feedItem.caption = caption
         
+        feedItem.filtered = true
+        
         (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
         
         self.navigationController?.popViewControllerAnimated(true)
@@ -199,7 +201,7 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     // MARK: - Caching Functions
     
     func cacheImage(imageNumber: Int) {
-        let fileName = "\(imageNumber)-\(feedItem.hashValue)"
+        let fileName = "\(feedItem.uniqueID)\(imageNumber)"
         let uniquePath = tmp.stringByAppendingPathComponent(fileName)
         
         if !NSFileManager.defaultManager().fileExistsAtPath(fileName) {
@@ -211,17 +213,29 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func getCachedImage(imageNumber: Int) -> UIImage {
-        let fileName = "\(imageNumber)-\(feedItem.hashValue)"
+        let fileName = "\(feedItem.uniqueID)\(imageNumber)"
         let uniquePath = tmp.stringByAppendingPathComponent(fileName)
         
         var image: UIImage
         
         if NSFileManager.defaultManager().fileExistsAtPath(uniquePath) {
-            image = UIImage(contentsOfFile: uniquePath)!
+            var returnedImage = UIImage(contentsOfFile: uniquePath)!
+            /*
+            // fix orientation for running app on an actual device
+            image = UIImage(CGImage: returnedImage.CGImage, scale: 1.0, orientation: UIImageOrientation.Right)!
+            */
+            image = returnedImage
+            
         }
         else {
             self.cacheImage(imageNumber)
-            image = UIImage(contentsOfFile: uniquePath)!
+            var returnedImage = UIImage(contentsOfFile: uniquePath)!
+            /*
+            // fix orientation for running app on an actual device
+            image = UIImage(CGImage: returnedImage.CGImage, scale: 1.0, orientation: UIImageOrientation.Right)!
+            */
+            image = returnedImage
+            
         }
         return image
     }
