@@ -20,12 +20,16 @@ class MapViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         let request = NSFetchRequest(entityName: "FeedItem")
-        let appDelegate: AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
-        let context:NSManagedObjectContext = appDelegate.managedObjectContext!
+        let appDelegate: AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
+        let context:NSManagedObjectContext = appDelegate.managedObjectContext
         
-        
-        var error: NSError?
-        let itemArray = context.executeFetchRequest(request, error: &error)
+        let itemArray: [AnyObject]?
+        do {
+            itemArray = try context.executeFetchRequest(request)
+        } catch let error as NSError {
+            print(error)
+            itemArray = nil
+        }
         
         if itemArray!.count > 0 {
             for item in itemArray! {
@@ -35,7 +39,7 @@ class MapViewController: UIViewController {
                 mapView.setRegion(region, animated: true)
             
                 let annotation = MKPointAnnotation()
-                annotation.setCoordinate(location)
+                annotation.coordinate = location
                 annotation.title = item.caption
                 mapView.addAnnotation(annotation)
             }

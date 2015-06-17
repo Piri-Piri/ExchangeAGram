@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>de.piri-piri.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -18,10 +18,31 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb563356477097512</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>563356477097512</string>
+	<key>FacebookDisplayName</key>
+	<string>ExchangeAGram</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>ExchangeAGram Would like to use your Location</string>
+	<key>NSLocationUsageDescription</key>
+	<string>ExchangeAGram Would like to use your Location</string>
+	<key>NSLocationWhenInUsageDescription</key>
+	<string>ExchangeAGram Would like to use your Location</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -36,27 +57,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>FacebookAppID</key>
-	<string>563356477097512</string>
-	<key>FacebookDisplayName</key>
-	<string>ExchangeAGram</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb563356477097512</string>
-			</array>
-		</dict>
-	</array>
-	<key>NSLocationUsageDescription</key>
-	<string>ExchangeAGram Would like to use your Location</string>
-	<key>NSLocationWhenInUsageDescription</key>
-	<string>ExchangeAGram Would like to use your Location</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>ExchangeAGram Would like to use your Location</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -28,6 +28,7 @@ class ProfileViewController: UIViewController, FBLoginViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
     func loginViewShowingLoggedInUser(loginView: FBLoginView!) {
         self.profileImageView.hidden = false
         self.nameLabel.hidden = false
@@ -36,7 +37,7 @@ class ProfileViewController: UIViewController, FBLoginViewDelegate {
     func loginViewFetchedUserInfo(loginView: FBLoginView!, user: FBGraphUser!) {
         self.nameLabel.text = user.name
         
-        let userImageURL = "https://graph.facebook.com/\(user.objectID)/picture?type=small"
+        let userImageURL = "https://graph.facebook.com/\(user.objectID)/picture?type=large"
         let url = NSURL(string: userImageURL)
         let imageData = NSData(contentsOfURL: url!)
         let image = UIImage(data: imageData!)
@@ -50,7 +51,7 @@ class ProfileViewController: UIViewController, FBLoginViewDelegate {
     }
     
     func loginView(loginView: FBLoginView!, handleError error: NSError!) {
-        println("Error: \(error.localizedDescription)")
+        print("Error: \(error.localizedDescription)")
     }
     
     @IBAction func mapViewButtonTapped(sender: UIButton) {
